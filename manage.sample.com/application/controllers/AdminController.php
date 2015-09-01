@@ -1,0 +1,140 @@
+<?php
+
+class AdminController extends Star_Controller_Action
+{
+    public function init()
+	{
+		$this->disableLayout();
+	}
+    
+    /**
+     * 管理员登录 
+     */
+    public function loginAction()
+    {
+        $request = $this->getRequest();
+        $admin_service = new AdminService();
+        
+        //用户已登录跳转到后台首页
+        if ($admin_service->checkLogin() == true)
+        {
+            return $this->redirect('/admin');
+        }
+        
+        if ($request->isPost())
+        {
+            $username = trim($request->getParam('username'));
+            $password = $request->getParam('password');
+            $captcha = $request->getParam('captcha');
+            $remember = $request->getParam('remember');
+            
+            if (empty($username))
+            {
+                return $this->showJson(1, '请输入用户名');
+            }
+            
+            if (empty($password) || strlen($password) < 6)
+            {
+                return $this->showJson(2, '请输入6位以上密码');
+            }
+
+            if ($admin_service->checkCaptcha($captcha) == false)
+            {
+                return $this->showJson(3, '帐号或密码有误，请重新输入');
+            }
+                
+            $admin = $admin_service->getAdminByUsername($username);
+            
+            if (empty($admin))
+            {
+                return $this->showJson(403, '帐号或密码有误，请重新输入');
+            }
+            
+            //当天密码错误超过500次
+            if ($admin['error_times'] > 500)
+            {
+                return $this->showJson(4, '帐号密码输入错误次数过多，请明日再试。');
+            }
+            
+            //验证密码是否正确
+            if ($admin['password'] == Password::Encryption($username, $password))
+            {
+                $admin_service->adminLogin($username, '', $remember);
+            }  else {
+                $admin_data = array();
+                if (Star_Date::getDate() == $admin['error_date'])
+                {
+                    $admin_data = array(
+                        'error_date' => Star_Date::getDate(),
+                        'error_times' => 'error_times + 1'
+                    );
+                } else {
+                    $admin_data = array(
+                        'error_date' => Star_Date::getDate(),
+                        'error_times' => 1
+                    );
+                }
+                
+                $admin_service->updateAdmin($admin['admin_id'], $admin_data, false);
+                return $this->showJson(403, '帐号或密码有误，请重新输入');
+            }
+            return $this->showJson(0, '登录成功');
+        }
+    }
+	
+    /**
+     * 后台首页 
+     */
+	public function indexAction()
+	{
+        $admin_service = new AdminService();
+        $admin = $admin_service->checkLogin();
+        $admin_id = $admin['admin_id'];
+        $department_id = $admin['department_id'];
+        //管理员菜单列表
+        $admin_menus = $admin_service->getAdminMenus($admin_id, $department_id);
+        //一级菜单
+        $top_menus = $admin_service->getTopMenu();
+        $this->view->assign(array(
+            'menus' => json_encode($admin_menus),
+            'top_menus' => json_encode($top_menus),
+            'admin' => $admin,
+        ));
+	}
+	
+    public function captchaAction()
+    {
+        $this->setNoRender();
+        $admin_service = new AdminService();
+        $captcha = $admin_service->getCaptcha();
+        return $this->showJson(0, array('captcha' => $captcha));
+    }
+    
+    /**
+     * 后台中心页 
+     */
+	public function centerAction()
+	{
+		  $this->render('welcome');
+	}
+    
+    /**
+     * 后台欢迎页 
+     */
+    public function welcomeAction()
+    {
+        
+    }
+    
+    /**
+     * 退出 
+     */
+    public function loginoutAction()
+    {
+        $admin_service = new AdminService();
+        $admin_service->loginOut();
+        $this->redirect('/admin/login');
+    }
+}
+
+?>

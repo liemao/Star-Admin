@@ -1,0 +1,397 @@
+<!doctype html>
+<html class="js no-touch localstorage svg">
+  <head>
+    <meta charset="UTF-8">
+    <title>Star Framewordk后台管理</title>
+
+    <!--IE Compatibility modes-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!--Mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/font-awesome/css/font-awesome.min.css">
+    <!-- Metis core stylesheet -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/main.min.css">
+    <!-- metisMenu stylesheet -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/metisMenu/metisMenu.min.css">
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/fullcalendar/fullcalendar.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+    <!--[if lt IE 9]>
+      <script src="assets/lib/html5shiv/html5shiv.js"></script>
+      <script src="assets/lib/respond/respond.min.js"></script>
+      <![endif]-->
+
+    <!--For Development Only. Not required -->
+    <script>
+    less = {
+        env: "development",
+        relativeUrls: false,
+        rootpath: "<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/"
+    };
+    Config = {
+        'static_path': "<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/"
+    };
+    </script>
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/style-switcher.css">
+    <link rel="stylesheet/less" type="text/css" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/less/theme.min.css">
+ </head>
+  <body class="menu-affix" style="padding-top: 54px;">
+    <div class="bg-dark dk" id="wrap">
+      <div id="top">
+        <!-- .navbar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="header">
+          <div class="container-fluid">
+
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <header class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span> 
+                <span class="icon-bar"></span> 
+                <span class="icon-bar"></span> 
+                <span class="icon-bar"></span> 
+              </button>
+              <a href="javascript:void(0);" class="navbar-brand">
+                <img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/img/logo.png" alt="">
+              </a> 
+            </header>
+            <div class="topnav">
+              <div class="btn-group">
+                <a data-placement="bottom" data-original-title="Fullscreen" data-toggle="tooltip" class="btn btn-default btn-sm" id="toggleFullScreen">
+                  <i class="glyphicon glyphicon-fullscreen"></i>
+                </a> 
+              </div>
+              <div class="btn-group">
+                <a data-placement="bottom" data-original-title="E-mail" data-toggle="tooltip" class="btn btn-default btn-sm">
+                  <i class="fa fa-envelope"></i>
+                  <span class="label label-warning">5</span> 
+                </a> 
+                <a data-placement="bottom" data-original-title="Messages" href="#" data-toggle="tooltip" class="btn btn-default btn-sm">
+                  <i class="fa fa-comments"></i>
+                  <span class="label label-danger">4</span> 
+                </a> 
+                <a data-toggle="modal" data-original-title="Help" data-placement="bottom" class="btn btn-default btn-sm" href="#helpModal">
+                  <i class="fa fa-question"></i>
+                </a> 
+              </div>
+              <div class="btn-group">
+                <a href="/admin/loginout" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom" class="btn btn-metis-1 btn-sm">
+                  <i class="fa fa-power-off"></i>
+                </a> 
+              </div>
+              <div class="btn-group">
+                <a data-placement="bottom" data-original-title="Show / Hide Left" data-toggle="tooltip" class="btn btn-primary btn-sm toggle-left" id="menu-toggle">
+                  <i class="fa fa-bars"></i>
+                </a> 
+                <a data-placement="bottom" data-original-title="Show / Hide Right" data-toggle="tooltip" class="btn btn-default btn-sm toggle-right"> <span class="glyphicon glyphicon-comment"></span>  </a> 
+              </div>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+              <!-- .nav -->
+              <ul class="nav navbar-nav" id="top_menu">
+              </ul><!-- /.nav -->
+            </div>
+          </div><!-- /.container-fluid -->
+        </nav><!-- /.navbar -->
+        <header class="head hidden">
+          <div class="search-bar">
+            <form class="main-search" action="">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Live Search ...">
+                <span class="input-group-btn">
+            <button class="btn btn-primary btn-sm text-muted" type="button">
+                <i class="fa fa-search"></i>
+            </button>
+        </span> 
+              </div>
+            </form><!-- /.main-search -->
+          </div><!-- /.search-bar -->
+          <div class="main-bar">
+            <h3>
+              <i class="fa fa-building"></i>&nbsp; Boxed and Fixed Header &amp; Nav</h3>
+          </div><!-- /.main-bar -->
+        </header><!-- /.head -->
+      </div><!-- /#top -->
+      <div id="left">
+        <div class="media user-media bg-dark dker" id="user-media">
+          <div class="user-media-toggleHover">
+            <span class="fa fa-user"></span> 
+          </div>
+          <div class="user-wrapper bg-dark">
+            <a class="user-link" href="">
+              <img class="media-object img-thumbnail user-img" alt="User Picture" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/img/user.gif">
+              <span class="label label-danger user-label hidden">16</span> 
+            </a> 
+            <div class="media-body">
+              <h5 class="media-heading">Archie</h5>
+              <ul class="list-unstyled user-info">
+                <li> <a href="javascript://"><?php echo $this->admin['username'];?></a>  </li>
+                <li>Last Access :
+                  <br>
+                  <small>
+                    <i class="fa fa-calendar"></i>&nbsp;<?php echo date('Y-m-d H:i:s', $this->admin['last_login']);?></small> 
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- #menu -->
+        <ul id="menu" class="bg-blue dker">
+        </ul><!-- /#menu -->
+      </div><!-- /#left -->
+      <div id="content">
+        <div class="outer">
+          <div class="inner bg-light lter">
+            <iframe src="/admin/welcome" name="mainFrame" id="mainFrame" width="100%" height="100%" allowtransparency="yes" border="0" frameborder="0"></iframe>
+          </div><!-- /.inner -->
+        </div><!-- /.outer -->
+      </div><!-- /#content -->
+      <div id="right" class="bg-light lter">
+        <div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Warning!</strong>  Best check yo self, you're not looking too good.
+        </div>
+
+        <!-- .well well-small -->
+        <div class="well well-small dark">
+          <ul class="list-unstyled">
+            <li>Visitor <span class="inlinesparkline pull-right">1,4,4,7,5,9,10</span> </li>
+            <li>Online Visitor <span class="dynamicsparkline pull-right">Loading..</span> </li>
+            <li>Popularity <span class="dynamicbar pull-right">Loading..</span> </li>
+            <li>New Users <span class="inlinebar pull-right">1,3,4,5,3,5</span> </li>
+          </ul>
+        </div><!-- /.well well-small -->
+
+        <!-- .well well-small -->
+        <div class="well well-small dark">
+          <button class="btn btn-block">Default</button>
+          <button class="btn btn-primary btn-block">Primary</button>
+          <button class="btn btn-info btn-block">Info</button>
+          <button class="btn btn-success btn-block">Success</button>
+          <button class="btn btn-danger btn-block">Danger</button>
+          <button class="btn btn-warning btn-block">Warning</button>
+          <button class="btn btn-inverse btn-block">Inverse</button>
+          <button class="btn btn-metis-1 btn-block">btn-metis-1</button>
+          <button class="btn btn-metis-2 btn-block">btn-metis-2</button>
+          <button class="btn btn-metis-3 btn-block">btn-metis-3</button>
+          <button class="btn btn-metis-4 btn-block">btn-metis-4</button>
+          <button class="btn btn-metis-5 btn-block">btn-metis-5</button>
+          <button class="btn btn-metis-6 btn-block">btn-metis-6</button>
+        </div><!-- /.well well-small -->
+
+        <!-- .well well-small -->
+        <div class="well well-small dark">
+          <span>Default</span> <span class="pull-right"><small>20%</small> </span> 
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-info" style="width: 20%"></div>
+          </div>
+          <span>Success</span> <span class="pull-right"><small>40%</small> </span> 
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-success" style="width: 40%"></div>
+          </div>
+          <span>warning</span> <span class="pull-right"><small>60%</small> </span> 
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-warning" style="width: 60%"></div>
+          </div>
+          <span>Danger</span> <span class="pull-right"><small>80%</small> </span> 
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-danger" style="width: 80%"></div>
+          </div>
+        </div>
+      </div><!-- /#right -->
+    </div><!-- /#wrap -->
+    <footer class="Footer bg-dark dker" id="footer">
+      <p>2015 &copy; StarFramework Admin</p>
+    </footer><!-- /#footer -->
+
+    <!-- #helpModal -->
+    <div id="helpModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+              in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal --><!-- /#helpModal -->
+
+    <!--jQuery -->
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/jquery/jquery.min.js"></script>
+    <script src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/less/less.min.js"></script>
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap/js/bootstrap.min.js"></script>
+    <!-- MetisMenu -->
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/metisMenu/metisMenu.min.js"></script>
+    <!-- Screenfull -->
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/screenfull/screenfull.min.js"></script>
+    <!-- Metis core scripts -->
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/core.min.js"></script>
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/style-switcher.min.js"></script>
+  </body>
+
+<script type="text/javascript">
+var menus = <?php echo $this->menus?>;
+var top_menus = <?php echo $this->top_menus;?>;
+var Menu = {
+    that: {},
+    main_iframe: {},
+    top_menus: {},
+    menu_obj:"",
+    init: function(top_menus){
+        that = this;
+        this.menu_obj = jQuery('#menu');
+        this.main_iframe = this.getMainIframe();
+        this.top_menus = top_menus;
+        this.setTopMenu();
+        jQuery('#top_menu li').click(function(e){
+            e.preventDefault();
+            var menu_id = jQuery(this).attr('menu_id');
+            that.setSubMenu(menu_id);
+            return false;
+        });
+        
+        this.menu_obj.on('click', '.sub_menu', function(){
+            var menu_scroll_timeout = setTimeout(function(){
+                that.setMenuScroll();
+                clearTimeout(menu_scroll_timeout);
+            }, 200)
+                
+        });
+        
+        this.menu_obj.hover(function(){
+            that.setMenuScroll();
+        }, function(){
+            that.clearMenuScroll();
+        });
+        jQuery('#top_menu li:first').trigger('click');
+        
+    },
+    getMainIframe: function(){
+        return document.getElementById("mainFrame");
+    },
+    setTopMenu: function()
+    {
+        if (menus)
+        {
+            var top_menus = '';
+            for (i in this.top_menus)
+            {
+                var menu = this.top_menus[i];
+                var top_id = menu.menu_id;
+                if (menus[top_id] != undefined)
+                {
+                    top_menus += '<li menu_id="'+menu.menu_id+'"><a href="javascript:void(0);">'+menu.menu_name+'</a></li>';
+                }
+            }
+            jQuery('#top_menu').html(top_menus);
+        }
+    }, 
+    setSubMenu:function(menu_id){
+        if (menus[menu_id] == undefined)
+        {
+            return ;
+        }
+        var menu = menus[menu_id].menu_info;
+        var sub_menu_title = menu.menu_name;
+        var sub_menu_html = '';
+        var sub_menus = menus[menu_id].sub_menus;
+        if (sub_menus != undefined)
+        {
+            var j = 0;
+            for (i in sub_menus)
+            {
+                var sub_menu_info = sub_menus[i].menu_info;
+                var third_menus = sub_menus[i].sub_menus;
+                if (third_menus == undefined)
+                {
+                    continue;
+                }
+                sub_menu_html += '<li class=""><a href="javascript:;" class="sub_menu"><i class="fa fa-tasks"></i><span class="link-title">' + sub_menu_info.menu_name + '</span> <span class="fa arrow"></span></a> <ul class="collapse">';
+                for (k in third_menus)
+                {
+                    var link =  '/' + third_menus[k].controller + '/' + third_menus[k].action;            
+                    sub_menu_html += '<li><a href="'+link+'" target="mainFrame"><i class="fa fa-angle-right"></i>&nbsp; '+third_menus[k].menu_name+'</a></li>';
+                }
+                sub_menu_html += "</ul>";
+                j++;
+            }
+        }
+        this.renderSubMenu(sub_menu_html);
+        this.clickFirstSubMenu();
+    },
+    renderSubMenu:function(html)
+    {
+        return this.menu_obj.html(html);
+    },
+    clickFirstSubMenu:function(){
+        var first_menu_item = setTimeout(function(){
+            that.menu_obj.children('li').find('.sub_menu').trigger('click');
+            clearTimeout(first_menu_item);
+        }, 100);
+    },
+    setMenuScroll: function(){
+        var menu_height = this.menu_obj.height();
+        var menu_items_height = 0;
+        this.menu_obj.children('li').each(function() {
+            menu_items_height = menu_items_height + jQuery(this).height();
+        });
+        
+        if (menu_items_height > menu_height)
+        {
+            this.menu_obj.css({'overflow-x': 'hidden', 'overflow-y': 'scroll'});
+        } else{
+            that.clearMenuScroll();
+        }
+    },
+    clearMenuScroll: function(){
+        this.menu_obj.css({'overflow-x': 'hidden', 'overflow-y': 'hidden'});
+    }
+};
+
+var ContentAutoHeight = {
+    init: function(){
+        this.setContentHeight();
+    },
+    setContentHeight : function() {
+        jQuery('#content').height(this.getWindowHeight() - this.getHeaderHeight() - this.getFooterHeight());
+    },
+    getWindowHeight : function() {
+        return jQuery(window).height();
+    },
+    getHeaderHeight : function() {
+        return jQuery('#header').height();
+    },
+    getFooterHeight : function(){
+        return jQuery('#footer').height();
+    }
+
+};
+jQuery(document).ready(function(){
+    Menu.init(top_menus);
+    ContentAutoHeight.init();
+    
+    jQuery(window).resize(function(){
+        ContentAutoHeight.setContentHeight();
+        Metis.init();
+    });
+});
+
+</script>
+</html>

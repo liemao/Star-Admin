@@ -1,0 +1,122 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+    <!--IE Compatibility modes-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!--Mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Page</title>
+    <meta name="msapplication-TileColor" content="#5bc0de" />
+    <meta name="msapplication-TileImage" content="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/img/metis-tile.png" />
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/main.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+    <!--[if lt IE 9]>
+      <script src="assets/lib/html5shiv/html5shiv.js"></script>
+      <script src="assets/lib/respond/respond.min.js"></script>
+      <![endif]-->
+
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/jquery/jquery.min.js"></script>
+  </head>
+  <body class="login">
+    <div class="form-signin">
+      <div class="text-center">
+        <img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/img/logo.png" alt="Metis Logo">
+      </div>
+      <hr>
+      <div class="tab-content">
+        <div id="login" class="tab-pane active">
+            <p class="text-muted text-center" id="err_message">
+              请输入用户名密码
+            </p>
+            <input type="text" name="username" id="username" placeholder="用户名" value="<?php echo $this->usernmae;?>" class="form-control top">
+            <input type="password" name="password" id="password" placeholder="密码" class="form-control bottom">
+            <input type="hidden" name="captcha" id="captcha" value="<?php echo $this->captcha;?>" placeholder="验证码" class="form-control bottom">
+            <div class="checkbox">
+              <label>
+                <input name="remember" id="remember" checked="" type="checkbox"> 记住密码
+              </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="button" id="btn_login">登 录</button>
+        </div>
+        <div id="forgot" class="tab-pane">
+          <form action="index.html">
+            <p class="text-muted text-center">Enter your valid e-mail</p>
+            <input type="email" placeholder="mail@domain.com" class="form-control">
+            <br>
+            <button class="btn btn-lg btn-danger btn-block" type="submit">Recover Password</button>
+          </form>
+        </div>
+        <div id="signup" class="tab-pane">
+          <form action="index.html">
+            <input type="text" placeholder="username" class="form-control top">
+            <input type="email" placeholder="mail@domain.com" class="form-control middle">
+            <input type="password" placeholder="password" class="form-control middle">
+            <input type="password" placeholder="re-password" class="form-control bottom">
+            <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
+          </form>
+        </div>
+      </div>
+      <div class="text-center hidden">
+        <ul class="list-inline">
+          <li> <a class="text-muted" href="#login" data-toggle="tab">Login</a>  </li>
+          <li> <a class="text-muted" href="#forgot" data-toggle="tab">Forgot Password</a>  </li>
+          <li> <a class="text-muted" href="#signup" data-toggle="tab">Signup</a>  </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('#username').focus();
+        
+        jQuery('#btn_login').click(function(){
+            var username = jQuery('#username').val();
+            var password = jQuery('#password').val();
+            var captcha = jQuery('#captcha').val();
+            var remember = jQuery('#remember')[0].checked;
+            jQuery.ajax({
+                url: '/admin/login',
+                type: 'post',
+                dataType: 'json',
+                data: {username: username, password: password, captcha: captcha, remember: remember},
+                success: function(data){
+                    if (data.err == 0)
+                    {
+                        return window.location.reload();
+                    } else{
+                        jQuery('#err_message').text(data.message);
+                        jQuery('#password').val('').focus();
+                        getCaptcha();
+                    }
+                }
+            });
+        });
+        getCaptcha();
+    });
+    
+    function getCaptcha()
+    {
+        jQuery.ajax({
+            url: '/admin/captcha',
+            type: 'get',
+            dataType: 'json',
+            success: function(data)
+            {
+                if (data.err == 0)
+                {
+                    var captcha = data.data.captcha;
+                    jQuery('#captcha').val(captcha);
+                }
+            }
+        });
+    }
+</script>
+</html>

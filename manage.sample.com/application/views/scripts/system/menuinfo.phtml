@@ -1,0 +1,169 @@
+<div class="row">
+    <form action="" method="post" class="form-horizontal" id="block-validate" novalidate="novalidate">
+    <div class="col-lg-12">
+      <div class="box">
+        <header>
+          <div class="icons">
+            <i class="fa fa-edit"></i>
+          </div>
+          <h5>菜单信息</h5>
+
+          <!-- .toolbar -->
+          <div class="toolbar">
+            <nav style="padding: 8px;">
+              <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                <i class="fa fa-minus"></i>
+              </a> 
+              <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                <i class="fa fa-expand"></i>
+              </a> 
+              <a href="javascript:;" class="btn btn-danger btn-xs close-box">
+                <i class="fa fa-times"></i>
+              </a> 
+            </nav>
+          </div><!-- /.toolbar -->
+        </header>
+        <div id="collapseOne" class="body collapse in" aria-expanded="true">
+            <div class="form-group">
+              <label class="control-label col-lg-4">菜单分类</label>
+               <select  name="top_menu" id="top_menu" class="selected_control" <?php if ($this->menu){ echo "disabled='disabled'";}?>>
+                    <option value="0"  >请选择</option>
+                <?php 
+                foreach ($this->menus as $menu)
+                {
+                ?>
+                    <option <?php if ($this->menu['top_id'] == $menu['menu_id']){ echo "selected='selected'";}?> value="<?php echo $menu['menu_id'];?>"  ><?php echo $menu['menu_name'];?></option>
+                <?php 
+                }
+                ?>
+                </select>
+                <select id="second_menu" name="second_menu" class="selected_control" <?php if ($this->menu['menu_level'] < 2){ echo "display:none;"; } ?>" <?php if ($this->menu){ echo "disabled='disabled'";}?>>
+                    <option value="0">请选择</option>
+                    <?php 
+                    foreach ($this->second_menus as $menu)
+                    {
+                    ?>
+                    <option <?php if ($menu['menu_id'] == $this->menu['parent_id']){ echo "selected='selected'"; }?> value="<?php echo $menu['menu_id'];?>"><?php echo $menu['menu_name'];?></option>
+                    <?php 
+                    }
+                    ?>
+                </select>
+                <input type="hidden" id="top_id" name="top_id" value="<?php echo $this->menu['top_id'];?>">
+                <input type="hidden" id="parent_id" name="parent_id" value="<?php echo $this->menu['parent_id'];?>">
+            </div>
+            <div class="form-group">
+              <label class="control-label col-lg-4">菜单名称</label>
+              <div class="col-lg-4">
+                <input type="text" id="menu_name" name="menu_name" value="<?php echo $this->menu['menu_name'];?>" class="form-control">
+              </div>
+            </div>
+            <div class="form-group third_menu" <?php if ($this->menu['menu_level'] != 3){ echo 'style="display:none;"';}?>>
+              <label class="control-label col-lg-4">Controller</label>
+              <div class="col-lg-4">
+                <input type="text" id="controller" name="controller" value="<?php echo $this->menu['controller'];?>" class="form-control">
+              </div>
+            </div>
+            <div class="form-group third_menu" <?php if ($this->menu['menu_level'] != 3){ echo 'style="display:none;"';}?>>
+              <label class="control-label col-lg-4">Action</label>
+              <div class="col-lg-4">
+                <input type="text" id="action" name="action" value="<?php echo $this->menu['action'];?>" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-lg-4">是否显示</label>
+              <div class="col-lg-4">
+                    <input type="checkbox" <?php if ($this->menu['is_show'] == 1){ echo "checked='checked'";}?> name="is_show" value="1" class="uniform">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-lg-4">排序</label>
+              <div class="col-lg-4">
+                <input type="text" id="sort" name="sort" value="<?php echo $this->menu['sort'] > 0 ?  $this->menu['sort'] : 255;?>" class="form-control">
+              </div>
+            </div>
+        </div>
+      </div>
+    </div><!-- /.col-lg-12 -->
+
+    <div class="form-actions no-margin-bottom text-center form-group">
+        <input type="submit" value="提交" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" value="返回" onclick="history.go(-1);" class="btn btn-default">
+    </div>
+</form>
+</div>
+
+<script type="text/javascript">
+var Menu = {
+    that : {},
+    init: function (){
+        that = this;
+        jQuery('#top_menu').change(function(e){
+            that.topMenuChange(this);
+        });
+        
+        jQuery('#second_menu').change(function(e){
+            that.secondMenuChange(this);
+        });
+    },
+    topMenuChange : function(e){
+        var menu_id = jQuery(e).val();
+        if (menu_id > 0)
+        {
+            jQuery('#top_id').val(menu_id);
+            jQuery('#parent_id').val(menu_id);
+            jQuery('#second_menu').show();
+            jQuery.ajax({
+                type: 'POST',
+                url: '/system/submenu' ,
+                data: {menu_id: menu_id} ,
+                success: function(data){
+                    if (data.err != 0)
+                    {
+                        return alert(data.message == null ? data.data : data.message);
+                    }
+                    var option_html = "<option value='0'>请选择</option>";
+                    if (data.err == 0 && data.data)
+                    {
+                        var menus = data.data;
+                        for (i in menus)
+                        {
+                            option_html += '<option value="'+menus[i].menu_id+'">'+menus[i].menu_name+'</option>';
+                        }
+                    }
+                    return jQuery('#second_menu').html(option_html).show();
+                } ,
+                dataType: 'json'
+            });
+            
+        } else
+        {
+            jQuery('#top_id').val(0);
+            jQuery('#parent_id').val(0);
+            jQuery('#second_menu').hide();
+        }
+    },
+    secondMenuChange : function(e){
+        var menu_id = jQuery(e).val();
+        jQuery('#parent_id').val(menu_id);
+        if (menu_id > 0)
+        {
+            that.showThirdMenuOption();
+        } else{
+            that.hideThirdMenuOption();
+        }
+    },
+    showThirdMenuOption: function()
+    {
+        jQuery('.third_menu').show();
+    },
+    hideThirdMenuOption: function(){
+        jQuery('.third_menu').hide();
+    }
+};
+jQuery(document).ready(function(){
+    Menu.init();
+});
+</script>
+</body>
+</html>
+ 

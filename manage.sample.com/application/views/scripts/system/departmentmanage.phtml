@@ -1,0 +1,86 @@
+<!--Begin Datatables-->
+<div class="row">
+  <div class="col-lg-12 col-xs-12">
+    <div class="box">
+      <header>
+        <div class="icons">
+          <i class="fa fa-table"></i>
+        </div>
+        <h5>部门管理</h5>
+        <div class="toolbar">
+            <nav style="padding: 8px;">
+              <a class="btn btn-primary btn-sm btn-flat" href="/system/adddepartment" data-original-title="" title="">
+                  添加部门
+              </a>
+            </nav>
+          </div>
+      </header>
+      <div class="body" id="collapse4">
+        <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <thead>
+                          <tr role="row">
+                              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 80px;" aria-sort="ascending" >
+                                  部门ID
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  部门名称
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                 排序
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  操作
+                              </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <?php 
+                        foreach ($this->department_list as $department)
+                        {
+                        ?>
+                        <tr role="row" class="odd">
+                            <td><?php echo $department['department_id'];?></td>
+                            <td><?php echo $department['department_name'];?></td>
+                            <td><?php echo $department['sort'];?></td>
+                            <td>
+                                <a href="/system/editdepartment?department_id=<?php echo $department['department_id'];?>">
+                                   <i class="glyphicon glyphicon-edit"></i>编辑
+                                </a>
+                                <a href="/system/deletdepartment?department_id=<?php echo $department['department_id'];?>&csrf_token=<?php echo $this->csrf_token;?>">
+                                  <i class="glyphicon glyphicon-remove"></i>删除
+                                </a>
+                            </td>
+                        </tr>
+                        <?php 
+                        }
+                        ?>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="dataTables_info hidden" id="dataTable_info" role="status" aria-live="polite">
+                            Showing 1 to 25 of 57 entries
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                            <ul class="pagination">
+                                <li>
+                                    <?php echo $this->page;?>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.row -->
+
+<!--End Datatables-->

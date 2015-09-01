@@ -1,0 +1,129 @@
+<!--Begin Datatables-->
+<div class="row">
+  <div class="col-lg-12 col-xs-12">
+    <div class="box">
+      <header>
+        <div class="icons">
+          <i class="fa fa-table"></i>
+        </div>
+        <h5>菜单管理</h5>
+        <div class="toolbar">
+            <nav style="padding: 8px;">
+              <a class="btn btn-primary btn-sm btn-flat" href="/system/addmenu" data-original-title="" title="">
+                  添加菜单
+              </a>
+            </nav>
+          </div>
+      </header>
+      <div class="body" id="collapse4">
+        <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div class="row">
+                <form action="" method="post">
+                <div class="col-sm-12">
+                    <div class="dataTables_length" id="dataTable_length">
+                        <label>一级菜单
+                            <select name="top_id" aria-controls="dataTable" class="form-control input-sm">
+                                <option value="0">请选择</option>
+                            <?php 
+                            foreach ($this->top_menus as $key => $value)
+                            {
+                            ?>
+                                <option <?php if ($_GET['top_id'] == $key) { echo "selected='selected'"; }?> value="<?php echo $key;?>"><?php echo $value;?></option>
+                            <?php 
+                            }
+                            ?>
+                            </select> 
+                        </label>
+                        <label>
+                            菜单名称：<input type="search" name="menu_name" value="<?php echo $this->menu_name?>" class="form-control input-sm" placeholder="" aria-controls="dataTable"> 
+                        </label>
+                        <lable>
+                            <a class="btn btn-default btn-sm btn-grad search" href="javascript:void(0);" data-original-title="" title="">搜索</a>
+                        </lable>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <thead>
+                          <tr role="row">
+                              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 80px;" aria-sort="ascending" >
+                                  菜单ID
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  菜单级别
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                 一级菜单
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  菜单名称
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  链接
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  状态
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  排序
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  操作
+                              </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <?php 
+                        foreach ($this->menu_list as $menu)
+                        {
+                        ?>
+                        <tr role="row" class="odd">
+                            <td><?php echo $menu['menu_id'];?></td>
+                            <td><?php echo $menu['menu_level'];?>级菜单</td>
+                            <td><?php echo $menu['first_menu_name'];?></td>
+                            <td><?php echo $menu['menu_name'];?></td>
+                            <td><?php if ($menu['menu_level'] == 3){ echo "/{$menu['controller']}/{$menu['action']}";}?></td>
+                            <td><?php echo $menu['is_show'] == 1 ? '显示' : '不显示'; ?></td>
+                            <td><?php echo $menu['sort'];?></td>
+                            <td>
+                                <a href="/system/editmenu?menu_id=<?php echo $menu['menu_id'];?>">
+                                   <i class="glyphicon glyphicon-edit"></i>编辑
+                                </a>
+                                <a href="/system/deletemenu?menu_id=<?php echo $menu['menu_id'];?>&csrf_token=<?php echo $this->csrf_token;?>">
+                                  <i class="glyphicon glyphicon-remove"></i>删除
+                                </a>
+                            </td>
+                        </tr>
+                        <?php 
+                        }
+                        ?>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="dataTables_info hidden" id="dataTable_info" role="status" aria-live="polite">
+                            Showing 1 to 25 of 57 entries
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                            <ul class="pagination">
+                                <li>
+                                    <?php echo $this->page;?>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.row -->
+
+<!--End Datatables-->

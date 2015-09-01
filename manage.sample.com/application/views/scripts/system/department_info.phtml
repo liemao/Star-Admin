@@ -1,0 +1,132 @@
+<div class="row">
+    <form action="" method="post" class="form-horizontal" id="block-validate" novalidate="novalidate">
+    <div class="col-lg-12">
+      <div class="box">
+        <header>
+          <div class="icons">
+            <i class="fa fa-edit"></i>
+          </div>
+          <h5>部门信息</h5>
+
+          <!-- .toolbar -->
+          <div class="toolbar">
+            <nav style="padding: 8px;">
+              <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                <i class="fa fa-minus"></i>
+              </a> 
+              <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                <i class="fa fa-expand"></i>
+              </a> 
+              <a href="javascript:;" class="btn btn-danger btn-xs close-box">
+                <i class="fa fa-times"></i>
+              </a> 
+            </nav>
+          </div><!-- /.toolbar -->
+        </header>
+        <div id="collapseOne" class="body collapse in" aria-expanded="true">
+            <div class="form-group">
+              <label class="control-label col-lg-4">部门名称</label>
+              <div class="col-lg-4">
+                <input type="text" id="department_name" name="department_name" <?php if ($this->department['department_name']){ echo 'readonly';}?> value="<?php echo $this->department['department_name'];?>" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-lg-4">排序</label>
+              <div class="col-lg-4">
+                <input type="text" id="sort" name="sort" value="<?php echo $this->department['sort'];?>" class="form-control">
+              </div>
+            </div>
+        </div>
+      </div>
+    </div><!-- /.col-lg-12 -->
+
+    <div class="col-lg-12">
+      <div class="box">
+        <header>
+          <div class="icons">
+            <i class="fa fa-check"></i>
+          </div>
+          <h5>
+              权限管理<input type="checkbox" id="privs_all" class="uniform top_menu">
+                    
+          </h5>
+        </header>
+        <div class="body form-horizontal">
+            <?php 
+            foreach ($this->menus as $top_menu)
+            {
+            ?>
+            <div class="col-lg-12">
+                <div class="box">
+                  <header>
+                    <div class="icons">
+                      <i class="fa fa-check"></i>
+                    </div>
+                    <h5><?php echo $top_menu['menu_info']['menu_name'];?>
+                        <input type="checkbox" top_id="<?php echo $top_menu['menu_info']['menu_id'];?>" class="uniform top_menu">
+                    </h5>
+                    <div class="toolbar">
+                      <div class="checker">
+                          <span class="checked"></span>
+                      </div>
+                    </div>
+                  </header>
+                    <?php 
+                    foreach ((array) $top_menu['sub_menus'] as $second_menu)
+                    {
+                    ?>
+                    <div class="form-group">
+                      <label class="control-label col-lg-2"><?php echo $second_menu['menu_info']['menu_name']; ?></label>
+                      <div class="col-lg-10">
+                        <?php 
+                        foreach ((array) $second_menu['sub_menus'] as $menu)
+                        {
+                        ?>
+                        <div class="checkbox pull-left">
+                          <label>
+                            <div class="checker">
+                                <span class="checked">
+                                    <input type="checkbox" name="menu_ids[]" <?php if (isset($this->auth_options[$menu['menu_id']])){ echo "checked='checked'";}?> value="<?php echo $menu['menu_id'];?>" class='top_menu_<?php echo $top_menu['menu_info']['menu_id']; ?> menu' class="uniform">
+                                </span>
+                            </div> 
+                            <?php echo $menu['menu_name'];?>
+                          </label>
+                        </div>
+                        <?php 
+                        }
+                        ?>
+                      </div>
+                    </div><!-- /.row -->
+                    <?php 
+                    }
+                    ?>
+                </div>
+            </div>
+            <?php 
+            }
+            ?>
+            <div style="clear:both;height: 1px;">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions no-margin-bottom text-center form-group">
+        <input type="submit" value="提交" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" value="返回" onclick="history.go(-1);" class="btn btn-default">
+    </div>
+</form>
+</div>
+
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+    jQuery('#privs_all').click(function(){
+        jQuery('.menu').attr('checked', this.checked);
+    });
+    
+    jQuery('.top_menu').click(function(){
+        var top_id = jQuery(this).attr('top_id');
+        jQuery('.top_menu_' + top_id).attr('checked', this.checked);
+    });
+});
+</script>

@@ -1,0 +1,161 @@
+<div class="row">
+    <form action="" method="post" class="form-horizontal" id="block-validate" novalidate="novalidate">
+    <div class="col-lg-12">
+      <div class="box">
+        <header>
+          <div class="icons">
+            <i class="fa fa-edit"></i>
+          </div>
+          <h5>管理员信息</h5>
+
+          <!-- .toolbar -->
+          <div class="toolbar">
+            <nav style="padding: 8px;">
+              <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                <i class="fa fa-minus"></i>
+              </a> 
+              <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                <i class="fa fa-expand"></i>
+              </a> 
+              <a href="javascript:;" class="btn btn-danger btn-xs close-box">
+                <i class="fa fa-times"></i>
+              </a> 
+            </nav>
+          </div><!-- /.toolbar -->
+        </header>
+        <div id="collapseOne" class="body collapse in" aria-expanded="true">
+            <div class="form-group">
+              <label class="control-label col-lg-4">用户名</label>
+              <div class="col-lg-4">
+                <input type="text" id="username" name="username" <?php if ($this->admin['username']){ echo 'readonly';}?> value="<?php echo $this->admin['username'];?>" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-lg-4">密码</label>
+              <div class="col-lg-4">
+                <input type="password" id="password" name="password" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-lg-4">姓名</label>
+              <div class="col-lg-4">
+                <input type="text" id="admin_name" name="admin_name" value="<?php echo $this->admin['admin_name'];?>" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-lg-4">用户组</label>
+              <div class="col-lg-4">
+                <select name="department_id" id="department_id" class="form-control">
+                    <option value="0">请选择</option>
+                    <?php 
+                    foreach ($this->departments as $department_id => $department_name)
+                    {
+                    ?>
+                    <option <?php if ($department_id == $this->admin['department_id']){ echo "selected='selected'"; }?> value="<?php echo $department_id;?>"><?php echo $department_name;?></option>
+                    <?php 
+                    }
+                    ?>
+                </select>
+              </div>
+            </div>
+            
+        </div>
+      </div>
+    </div><!-- /.col-lg-12 -->
+
+<?php 
+if ($this->admin)
+{
+?>
+    <div class="col-lg-12">
+      <div class="box">
+        <header>
+          <div class="icons">
+            <i class="fa fa-check"></i>
+          </div>
+          <h5>
+              权限管理<input type="checkbox" id="privs_all" class="uniform top_menu">
+                    
+          </h5>
+        </header>
+        <div class="body form-horizontal">
+            <?php 
+            foreach ($this->menus as $top_menu)
+            {
+            ?>
+            <div class="col-lg-12">
+                <div class="box">
+                  <header>
+                    <div class="icons">
+                      <i class="fa fa-check"></i>
+                    </div>
+                    <h5><?php echo $top_menu['menu_info']['menu_name'];?>
+                        <input type="checkbox" top_id="<?php echo $top_menu['menu_info']['menu_id'];?>" class="uniform top_menu">
+                    </h5>
+                    <div class="toolbar">
+                      <div class="checker">
+                          <span class="checked"></span>
+                      </div>
+                    </div>
+                  </header>
+                    <?php 
+                    foreach ((array) $top_menu['sub_menus'] as $second_menu)
+                    {
+                    ?>
+                    <div class="form-group">
+                      <label class="control-label col-lg-2"><?php echo $second_menu['menu_info']['menu_name']; ?></label>
+                      <div class="col-lg-10">
+                        <?php 
+                        foreach ((array) $second_menu['sub_menus'] as $menu)
+                        {
+                        ?>
+                        <div class="checkbox pull-left  <?php if (isset($this->department_auth_options[$menu['menu_id']])){ echo 'disabled';} ?>">
+                          <label>
+                            <div class="checker">
+                                <span class="checked">
+                                    <input type="checkbox" name="menu_ids[]" <?php if (isset($this->admin_auth_options[$menu['menu_id']])){ echo "checked='checked'";}?> value="<?php echo $menu['menu_id'];?>" <?php if (isset($this->department_auth_options[$menu['menu_id']])){ echo "checked='checked' disabled='disabled'"; } else{ echo "class='top_menu_{$top_menu['menu_info']['menu_id']} menu'"; }?> class="uniform">
+                                </span>
+                            </div> 
+                            <?php echo $menu['menu_name'];?>
+                          </label>
+                        </div>
+                        <?php 
+                        }
+                        ?>
+                      </div>
+                    </div><!-- /.row -->
+                    <?php 
+                    }
+                    ?>
+                </div>
+            </div>
+            <?php 
+            }
+            ?>
+            <div style="clear:both;height: 1px;">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+<?php 
+}
+?>
+    <div class="form-actions no-margin-bottom text-center form-group">
+        <input type="submit" value="提交" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" value="返回" onclick="history.go(-1);" class="btn btn-default">
+    </div>
+</form>
+</div>
+
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+    jQuery('#privs_all').click(function(){
+        jQuery('.menu').attr('checked', this.checked);
+    });
+    
+    jQuery('.top_menu').click(function(){
+        var top_id = jQuery(this).attr('top_id');
+        jQuery('.top_menu_' + top_id).attr('checked', this.checked);
+    });
+});
+</script>

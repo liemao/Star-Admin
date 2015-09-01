@@ -1,0 +1,96 @@
+<!--Begin Datatables-->
+<div class="row">
+  <div class="col-lg-12 col-xs-12">
+    <div class="box">
+      <header>
+        <div class="icons">
+          <i class="fa fa-table"></i>
+        </div>
+        <h5>登录日志</h5>
+      </header>
+      <div class="body" id="collapse4">
+        <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div class="row">
+                <form action="" method="get">
+                <div class="col-sm-12">
+                    <div class="dataTables_length" id="dataTable_length">
+                        <label>
+                            用户名：<input type="search" name="username" value="<?php echo $this->username?>" class="form-control input-sm" placeholder="" aria-controls="dataTable"> 
+                        </label>
+                        <label>
+                            登录时间：
+                            <div class="input-group input-append">
+                                <input class="form-control date" type="text" name="start_date" value="<?php echo $this->start_date;?>" readonly="">
+                            </div>  -
+                            <div class="input-group input-append">
+                                <input class="form-control date" type="text" name="end_date" value="<?php echo $this->end_date;?>" readonly="">
+                            </div>
+                        </label>
+                        <lable>
+                            <a class="btn btn-default btn-sm btn-grad search" href="javascript:void(0);" data-original-title="" title="">搜索</a>
+                        </lable>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <thead>
+                          <tr role="row">
+                              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 80px;" aria-sort="ascending" >
+                                  用户名
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  姓名
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                 登录IP
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  登录时间
+                              </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <?php 
+                        foreach ($this->login_logs as $key => $log)
+                        {
+                        ?>
+                        <tr role="row" class="<?php if ($key % 2 == 0) { echo 'even';} else{ echo 'odd'; }?>">
+                            <td><?php echo $log['username'];?></td>
+                            <td><?php echo $log['admin_name'];?></td>
+                            <td><?php echo long2ip($log['login_ip']);?></td>
+                            <td><?php echo Star_Date::timeToDate($log['add_time']);?></td>
+                        </tr>
+                        <?php 
+                        }
+                        ?>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="dataTables_info hidden" id="dataTable_info" role="status" aria-live="polite">
+                            Showing 1 to 25 of 57 entries
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                            <ul class="pagination">
+                                <li>
+                                    <?php echo $this->page;?>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.row -->
+
+<!--End Datatables-->
+

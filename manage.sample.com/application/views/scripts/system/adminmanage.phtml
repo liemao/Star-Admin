@@ -1,0 +1,121 @@
+<!--Begin Datatables-->
+<div class="row">
+  <div class="col-lg-12 col-xs-12">
+    <div class="box">
+      <header>
+        <div class="icons">
+          <i class="fa fa-table"></i>
+        </div>
+        <h5>用户管理</h5>
+        <div class="toolbar">
+            <nav style="padding: 8px;">
+              <a class="btn btn-primary btn-sm btn-flat" href="/system/addadmin" data-original-title="" title="">
+                  添加用户
+              </a>
+            </nav>
+          </div>
+      </header>
+      <div class="body" id="collapse4">
+        <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div class="row">
+                <form action="" method="post">
+                <div class="col-sm-12">
+                    <div class="dataTables_length" id="dataTable_length">
+                        <label>部门 
+                            <select name="department_id" aria-controls="dataTable" class="form-control input-sm">
+                                <option value="0">请选择</option>
+                            <?php 
+                            foreach ($this->departments as $department_id => $department_name)
+                            {
+                            ?>
+                                <option <?php if ($department_id == $this->department_id) { echo "selected"; }?> value="<?php echo $department_id;?>"><?php echo $department_name;?></option>
+                            <?php 
+                            }
+                            ?>
+                            </select> 
+                        </label>
+                        <label>
+                            用户名：<input type="search" name="admin_name" value="<?php echo $this->admin_name?>" class="form-control input-sm" placeholder="" aria-controls="dataTable"> 
+                        </label>
+                        <lable>
+                            <a class="btn btn-default btn-sm btn-grad search" href="javascript:void(0);" data-original-title="" title="">搜索</a>
+                        </lable>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <thead>
+                          <tr role="row">
+                              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 80px;" aria-sort="ascending" >
+                                  用户ID
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  用户组
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                 用户名称
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  真实姓名
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  最后登录
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  操作
+                              </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <?php 
+                        foreach ($this->admin_list as $admin)
+                        {
+                        ?>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1"><?php echo $admin['admin_id'];?></td>
+                            <td><?php echo $admin['department_name'];?></td>
+                            <td><?php echo $admin['username'];?></td>
+                            <td><?php echo $admin['admin_name'];?></td>
+                            <td><?php echo date('Y-m-d H:i:s', $admin['last_login']);?></td>
+                            <td>
+                                <a href="/system/editadmin?admin_id=<?php echo $admin['admin_id'];?>">
+                                   <i class="glyphicon glyphicon-edit"></i>编辑
+                                </a>
+                                <a href="/system/deleteadmin?admin_id=<?php echo $admin['admin_id'];?>&csrf_token=<?php echo $this->csrf_token;?>">
+                                  <i class="glyphicon glyphicon-remove"></i>删除
+                                </a>
+                            </td>
+                        </tr>
+                        <?php 
+                        }
+                        ?>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="dataTables_info hidden" id="dataTable_info" role="status" aria-live="polite">
+                            Showing 1 to 25 of 57 entries
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                            <ul class="pagination">
+                                <li>
+                                    <?php echo $this->page;?>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.row -->
+
+<!--End Datatables-->
