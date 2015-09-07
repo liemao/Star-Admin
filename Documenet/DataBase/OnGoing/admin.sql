@@ -33,7 +33,7 @@ CREATE TABLE `test_admin` (
   PRIMARY KEY  (`admin_id`),
   KEY `username` (`username`),
   KEY `department_id` (`department_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='管理员' AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='管理员' AUTO_INCREMENT=6 ;
 
 -- 
 -- 导出表中的数据 `test_admin`
@@ -55,7 +55,7 @@ CREATE TABLE `test_admin_department` (
   `add_time` int(10) NOT NULL COMMENT '添加时间',
   `update_time` int(10) NOT NULL COMMENT '更新时间',
   PRIMARY KEY  (`department_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='部门' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='部门' AUTO_INCREMENT=2 ;
 
 -- 
 -- 导出表中的数据 `test_admin_department`
@@ -63,6 +63,25 @@ CREATE TABLE `test_admin_department` (
 
 
 INSERT INTO `test_admin_department` VALUES (1, '超级管理员', 255, 0, 1399975325, 1399975325);
+
+-- --------------------------------------------------------
+
+-- 
+-- 表的结构 `test_admin_login`
+-- 
+
+CREATE TABLE `test_admin_login` (
+  `login_id` int(11) NOT NULL auto_increment COMMENT '自增ＩＤ',
+  `admin_id` int(11) NOT NULL COMMENT '管理员ＩＤ',
+  `login_ip` bigint(20) NOT NULL COMMENT '登录ID',
+  `add_time` int(11) NOT NULL COMMENT '登录时间',
+  PRIMARY KEY  (`login_id`),
+  KEY `admin_id` (`admin_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='管理员登录日志' AUTO_INCREMENT=28 ;
+
+-- 
+-- 导出表中的数据 `test_admin_login`
+-- 
 
 -- --------------------------------------------------------
 
@@ -84,7 +103,7 @@ CREATE TABLE `test_admin_menu` (
   `update_time` int(10) NOT NULL COMMENT '更新时间',
   PRIMARY KEY  (`menu_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='管理菜单' AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='管理菜单' AUTO_INCREMENT=36 ;
 
 -- 
 -- 导出表中的数据 `test_admin_menu`
@@ -126,7 +145,7 @@ CREATE TABLE `test_auth` (
   PRIMARY KEY  (`auth_id`),
   KEY `department_id` (`department_id`),
   KEY `admin_id` (`admin_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='权限' AUTO_INCREMENT=136 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='权限' AUTO_INCREMENT=136 ;
 
 -- 
 -- 导出表中的数据 `test_auth`

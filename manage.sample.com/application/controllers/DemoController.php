@@ -42,7 +42,11 @@ class DemoController extends Star_Controller_Action
     {
         
     }
-
+    
+    public function ckeditorAction()
+    {
+        
+    }
 }
 
 ?>
