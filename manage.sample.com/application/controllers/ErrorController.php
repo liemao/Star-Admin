@@ -10,6 +10,12 @@ class ErrorController extends Star_Controller_Action
     public function indexAction()
     {
         $code = $this->view->code;
+        
+        if (!isset($this->code_message[$code]))
+        {
+            $code = 404;
+        }
+        
         $message = $this->code_message[$code];
         $this->view->message = $message;
     }
