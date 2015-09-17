@@ -535,7 +535,7 @@ class Star_Controller_Front{
 
         if ($this->getDisPlayExceptions() == true)
         {
-            echo $e->__toString();
+            echo nl2br($e->__toString());
         }else{
             call_user_func(array('Star_Log', 'log'), $e->__toString());
         }

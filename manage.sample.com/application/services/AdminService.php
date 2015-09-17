@@ -283,7 +283,7 @@ class AdminService {
      */
     public function updateAdmin($admin_id, $admin_data, $quote_indentifier = true)
     {
-        return $this->admin_model->update($admin_id, $admin_data, '', $quote_indentifier);
+        return $this->admin_model->update($admin_id, $admin_data, $quote_indentifier);
     }
     
     /**
