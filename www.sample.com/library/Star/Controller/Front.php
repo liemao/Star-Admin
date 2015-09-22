@@ -15,7 +15,7 @@
 require 'Star/Controller/Action.php';
 class Star_Controller_Front{
 
-    protected $display_exceptions = false; //默认不显示异常
+    protected $debug = false; //默认关闭
     protected $request; //Star_Http_Request
 	protected $response; //Star_Http_Response
     protected $view; //Star_View
@@ -418,24 +418,24 @@ class Star_Controller_Front{
     }
     
     /**
-     * 设置是否显示异常
+     * 设置debug状态
      * 
      * @param type $flag
      * @return type 
      */
-    protected function setDisplayExceptions($flag = false)
+    protected function setDebug($debug = false)
     {
-        return $this->display_exceptions = $flag;
+        return $this->debug = $debug;
     }
     
     /**
-     * 返回异常显示状态
+     * 返回debug状态
      * 
      * @return type 
      */
-    protected function getDisPlayExceptions()
+    protected function getDebug()
     {
-        return $this->display_exceptions;
+        return $this->debug;
     }
 
     /**
@@ -533,11 +533,11 @@ class Star_Controller_Front{
             return $this->dispatch();
         }
 
-        if ($this->getDisPlayExceptions() == true)
+        if ($this->debug == true)
         {
             echo nl2br($e->__toString());
         }else{
-            call_user_func(array('Star_Log', 'log'), $e->__toString());
+            call_user_func(array('Star_Log', 'log'), $e->__toString(), 'error');
         }
         
         if ($e->getCode() == 500)

@@ -210,12 +210,13 @@ abstract class Star_Model_Abstract
      *
      * @param type $where
      * @param $conditions
+     * @param string $order
      * @return type 
      */
-	public function fetchRow($where, $conditions = '*')
+	public function fetchRow($where, $conditions = '*', $order = null)
 	{
         $table = $this->getTableName();
-		return $this->getAdapter()->fetchRow($where, $conditions , $table);
+		return $this->getAdapter()->fetchRow($where, $conditions , $table, $order);
 	}
 	
     /**

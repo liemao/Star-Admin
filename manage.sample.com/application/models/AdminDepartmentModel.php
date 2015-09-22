@@ -17,7 +17,7 @@ class AdminDepartmentModel extends Star_Model_Abstract {
      */
     public function getAllDepartment()
     {
-        return $this->fetchAll('1 = 1', '*', $this->getTableName(), 'sort ASC department_id DESC');
+        return $this->fetchAll('1 = 1', '*', 'sort ASC, department_id DESC');
     }
 
     /**
