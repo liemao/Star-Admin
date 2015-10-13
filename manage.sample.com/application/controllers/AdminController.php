@@ -132,6 +132,7 @@ class AdminController extends BaseController
      */
     public function loginoutAction()
     {
+        $this->setNoRender();
         $admin_service = new AdminService();
         $admin_service->loginOut();
         $this->redirect('/admin/login');
