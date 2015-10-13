@@ -1,6 +1,6 @@
 <?php
 
-class ErrorController extends Star_Controller_Action
+class ErrorController extends BaseController
 {
     protected $code_message = array(
         403 => 'Oops, an error has occurred. Forbidden!',

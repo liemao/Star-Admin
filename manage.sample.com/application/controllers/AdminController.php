@@ -1,9 +1,10 @@
 <?php
 
-class AdminController extends Star_Controller_Action
+class AdminController extends BaseController
 {
     public function init()
 	{
+        parent::init();
 		$this->disableLayout();
 	}
     

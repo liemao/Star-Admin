@@ -1,10 +1,10 @@
 <?php
 
-class SystemController extends Star_Controller_Action
+class SystemController extends BaseController
 {
     public function init()
 	{
-		
+		parent::init();
 	}
 	
     /**

@@ -1,8 +1,12 @@
 <?php
 
-class DemoController extends Star_Controller_Action
+class DemoController extends BaseController
 {
-    
+    public function init()
+    {
+        parent::init();
+    }
+
     public function dashboardAction()
     {
         
