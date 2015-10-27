@@ -255,7 +255,7 @@ class AdminService {
     protected function makeLoginSign($admin_id, $username, $department_id, $timestamp, $auth_token)
     {
         $ip = Star_Http_Request::getIp();
-        $http_agent = Star_Http_Request::getHttpAgent();
+        $http_agent = Star_Http_Request::getUserAgent();
         $tmpArr = array($admin_id, $username, $department_id, $timestamp, $ip, $http_agent, $this->token, $auth_token,);
         sort($tmpArr, SORT_STRING);
         $signature = md5(sha1(implode('', $tmpArr)));
@@ -877,7 +877,7 @@ class AdminService {
     {
         $token = Star_Config::get('resources.token');
         $ip = Star_Http_Request::getIp();
-        $user_agent = Star_Http_Request::getHttpAgent();
+        $user_agent = Star_Http_Request::getUserAgent();
         $temp_array = array($token, $ip, $user_agent);
         sort($temp_array, SORT_STRING);
         return md5(implode('', $temp_array));
